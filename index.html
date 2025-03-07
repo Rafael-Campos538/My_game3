@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js" defer></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="game"></div>
+
+    <!-- Carrega as cenas primeiro -->
+    <script src="scenes/MenuScene.js" type="module" defer></script>
+    <script src="scenes/GameScene.js" type="module" defer></script>
+    <script src="scenes/EndScene.js" type="module" defer></script>
+    <script src="main.js" type="module" defer></script> 
+    
+
+</body>
+</html>

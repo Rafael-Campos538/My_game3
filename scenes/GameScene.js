@@ -27,9 +27,19 @@ export class GameScene extends Phaser.Scene {
 
     create ()
     {
-        this.tempo = 0;
         this.pontos = 0;
         this.add.image(400, 300, 'sky');
+        this.tempo = 0;
+
+        // Criação do temporizador
+        this.tempoEvento = this.time.addEvent({
+            delay: 1000, // Atualiza a cada segundo
+            callback: () => {
+                this.tempo++; // Atualiza o tempo a cada segundo
+                this.tempoTexto.setText('Tempo: ' + this.tempo + 's'); // Atualiza o texto na tela
+            },
+            loop: true
+        });
 
         this.plataforma = this.physics.add.staticGroup();
         this.grama = this.plataforma.create(275, 600, 'grama');
@@ -113,22 +123,23 @@ export class GameScene extends Phaser.Scene {
             this.pontosTexto.setText('Pontos: '+ this.pontos);
         };
 
+        let gameOver = false
+
         const coletarLaranja = (player, laranja) => {
             laranja.destroy();
             this.pontos += 100;
             this.pontosTexto.setText('Pontos: ' + this.pontos);
-            
-            // Alterando o fluxo para evitar problemas com pausa
+
+            // Pausa o jogo e o temporizador
             this.physics.pause();
-            this.tempo.stop();
+            this.tempoEvento.remove(); // Para o temporizador
+
+            // Transição para a tela final
             gameOver = true;
-        
-            // Adicionando delay para evitar que a cena reinicie imediatamente
-            this.time.delayedCall(1000, () => {
-                this.scene.start('EndScene', { score: this.pontos });  // Passa a pontuação para a EndScene
+            this.time.delayedCall(500, () => {
+                this.scene.start('EndScene', { score: this.pontos, time: this.tempo }); // Passa tempo e pontos
             });
         };
-        
 
         
         // Adiciona colisão entre player e pontos
@@ -176,15 +187,7 @@ export class GameScene extends Phaser.Scene {
             fill: '#000',
             fontFamily: 'Arial'
         });
-        // Inicia o contador de tempo
-        this.time.addEvent({
-            delay: 1000, // Atualiza a cada segundo
-            callback: () => {
-                this.tempo++;
-                this.tempoTexto.setText('Tempo: ' + this.tempo + 's'); // Atualiza o texto na tela
-            },
-            loop: true
-        });
+
 
         // Adiciona o texto no canto superior esquerdo
         this.pontosTexto = this.add.text(20, 20, 'Pontos: 0', {

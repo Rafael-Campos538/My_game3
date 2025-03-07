@@ -149,11 +149,14 @@ export class GameScene extends Phaser.Scene {
 
         //colisão com morte
         const hitMorte = (player, lava, fogo) => {
+            // Pausa o jogo e o temporizador
             this.physics.pause();
-            this.player.setTint(0xff0000);
-            this.player.anims.play('turn');
-            this.tempo.stop();
+            this.tempoEvento.remove(); // Para o temporizador
+
             gameOver = true;
+            this.time.delayedCall(500, () => {
+                this.scene.start('EndScene', { score: this.pontos, time: this.tempo }); // Passa tempo e pontos
+            });
         }        
         this.physics.add.overlap(this.player, this.lava, hitMorte, null, this);
         this.physics.add.overlap(this.player, this.fogos, hitMorte, null, this);  

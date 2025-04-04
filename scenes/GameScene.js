@@ -17,7 +17,7 @@ export class GameScene extends Phaser.Scene {
         this.load.image('tijolos', 'assets/tijolos.png');
         this.load.image('cano', 'assets/cano.png');
         this.load.image('parede', 'assets/parede.png');
-        this.load.spritesheet('fogo', 'assets/fogo.png', { frameWidth: 180, frameHeight: 140 });  //fremeWidth e frameHeight são as dimensões do sprite
+        this.load.spritesheet('fogo', 'assets/fogo.png', { frameWidth: 192, frameHeight: 192 });  //fremeWidth e frameHeight são as dimensões do sprite
         this.load.image('nuvem', 'assets/nuvem.png');
         this.load.image('chegada', 'assets/chegada.png');
         this.load.image('laranja', 'assets/laranja.png');
